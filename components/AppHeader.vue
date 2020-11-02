@@ -1,7 +1,9 @@
 <template>
   <section class="masthead" role="img" aria-label="Image Description">
     <h1>Nuxt Food App</h1>
-    <button><nuxt-link to="/restaurants">Find place to eat ></nuxt-link></button>
+    <nuxt-link to="/restaurants">
+      <button>Find a restaurant</button>
+    </nuxt-link>
   </section>
 </template>
 
@@ -13,7 +15,7 @@ export default {};
 .masthead {
   width: 100%;
   height: 80vh; /* if you don't want it to take up the full screen, reduce this number */
-      padding: 40px;
+  padding: 40px;
   overflow: hidden;
   background-size: cover !important;
   background: radial-gradient(
