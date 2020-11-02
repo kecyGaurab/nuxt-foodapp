@@ -12,7 +12,7 @@ import AppRestaurantInfo from '@/components/AppRestaurantInfo.vue';
 export default {
   components: {
     AppHeader,
-    AppRestaurantInfo
+    AppRestaurantInfo,
   },
 };
 
