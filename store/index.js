@@ -1,5 +1,6 @@
 export const state = () => ({
-  fooddata: []
+  fooddata: [],
+  cart: []
 });
 
 // export const getters = {
@@ -11,6 +12,9 @@ export const state = () => ({
 export const mutations = {
     updateFoodData: (state, data) => {
         state.fooddata = data
+    },
+    addToCart:(state, formOutput) => {
+      state.cart.push(formOutput)
     }
 }
 
