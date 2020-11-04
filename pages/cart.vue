@@ -23,11 +23,11 @@
               }}</span>
             </td>
             <td>{{ item.count }}</td>
-            <td>${{ item.combinedPrice }}</td>
+            <td>€{{ item.combinedPrice }}</td>
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td class="total">Total: ${{ totalPrice.toFixed(2) }}</td>
+            <td class="total">Total: €{{ totalPrice.toFixed(2) }}</td>
           </tr>
         </tbody>
       </table>

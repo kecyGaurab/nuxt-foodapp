@@ -6,7 +6,7 @@
     ></section>
     <section class="details">
       <h1>{{ currentItem.item }}</h1>
-      <h3>Price: ${{ currentItem.price.toFixed(2) }}</h3>
+      <h3>Price: €{{ currentItem.price.toFixed(2) }}</h3>
       <div class="quantity">
         <input type="number" min="1" v-model="count" />
         <button @click="addToCart" class="primary">
@@ -78,6 +78,7 @@ export default {
       errors: false,
     };
   },
+
   components: {
     AppToast,
   },
