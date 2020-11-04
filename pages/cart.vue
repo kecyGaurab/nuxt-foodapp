@@ -67,8 +67,8 @@
         </g>
       </svg>
       <h3>Your cart is empty</h3>
-          <nuxt-link to="/">
-      <button>Fill it up</button>
+          <nuxt-link exact to="/">
+      <button class="primary">Fill it up</button>
     </nuxt-link>
     </section>
   </main>

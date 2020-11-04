@@ -9,7 +9,9 @@
       <h3>Price: ${{ currentItem.price.toFixed(2) }}</h3>
       <div class="quantity">
         <input type="number" min="1" v-model="count" />
-        <button @click="addToCart" class="primary">Add to Cart - {{ combinedPrice }}</button>
+        <button @click="addToCart" class="primary">
+          Add to Cart - {{ combinedPrice }}
+        </button>
       </div>
       <fieldset v-if="currentItem.options">
         <legend>
@@ -21,7 +23,7 @@
             name="option"
             :id="option"
             :value="option"
-            v-model="itemOptions"
+            v-model="$v.itemOptions.$model"
           />
           <label :for="option">{{ option }}</label>
         </div>
@@ -36,15 +38,22 @@
             name="addon"
             :id="addon"
             :value="addon"
-            v-model="itemAddons"
+            v-model="$v.itemAddons.$model"
           />
           <label :for="addon">{{ addon }}</label>
         </div>
       </fieldset>
 
-      <AppToast v-if="cartSubmitted">Order submitted <br>
-      Check out more <nuxt-link to="/restaurants">restaurants</nuxt-link>
-       </AppToast>
+      <AppToast v-if="cartSubmitted">
+        Order submitted <br />
+        Check out more <nuxt-link to="/restaurants">restaurants</nuxt-link>
+      </AppToast>
+
+      <AppToast v-if="errors">
+        Please select options and
+        <br />
+        addons before continuing
+      </AppToast>
     </section>
     <section class="options">
       <h3>Description</h3>
@@ -56,6 +65,7 @@
 <script>
 import { mapState } from "vuex";
 import AppToast from "@/components/AppToast.vue";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -65,10 +75,19 @@ export default {
       itemOptions: "",
       itemAddons: [],
       cartSubmitted: false,
+      errors: false,
     };
   },
   components: {
     AppToast,
+  },
+  validations: {
+    itemOptions: {
+      required,
+    },
+    itemAddons: {
+      required,
+    },
   },
   computed: {
     ...mapState(["fooddata"]),
@@ -85,17 +104,26 @@ export default {
     },
   },
   methods: {
-      addToCart() {
-          this.cartSubmitted = true;
-          let formOutput = {
-              item: this.currentItem.item,
-              count: this.count,
-              options: this.options,
-              addOns: this.itemAddons,
-              combinedPrice: this.combinedPrice
-          }
-          this.$store.commit('addToCart',formOutput)
+    addToCart() {
+      let formOutput = {
+        item: this.currentItem.item,
+        count: this.count,
+        options: this.options,
+        addOns: this.itemAddons,
+        combinedPrice: this.combinedPrice,
+      };
+      let addOnError = this.$v.itemAddons.$invalid;
+      let optionError = this.currentItem.options
+        ? this.$v.itemOptions.$invalid
+        : false;
+      if (addOnError || optionError) {
+        this.errors = true;
+      } else {
+        this.errors = false;
+        this.cartSubmitted = true;
+        this.$store.commit("addToCart", formOutput);
       }
+    },
   },
 };
 </script>
